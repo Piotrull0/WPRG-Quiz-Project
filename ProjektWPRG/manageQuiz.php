@@ -133,7 +133,7 @@ $cats = $conn->query("SELECT id, name FROM categories ORDER BY name");
             </select>
         </div>
         <div class="mb-2">
-            <label class="form-label">Treść pytania:</label>
+            <label class="form-label">Question:</label>
             <input type="text" name="question_text_${qIndex}" class="form-control" required>
         </div>
         <div id="options_${qIndex}">
