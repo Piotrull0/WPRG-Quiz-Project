@@ -10,7 +10,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     $email = $_POST["email"];
     $pass = $_POST["password"];
-    $rem = $_POST["rem"];
+    if (isset($_POST['rem'])) {
+        $rem = $_POST["rem"];
+    }
 
     $gname = $conn->prepare("SELECT nickname FROM userprofile JOIN accounts a on userprofile.id = a.userProfileId WHERE email = ?");
     $gname->bind_param("s", $email);
@@ -19,16 +21,18 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     if (mysqli_num_rows($gresult) == 1) {
 
-        $cpass = $conn->prepare("SELECT password, accountType FROM accounts WHERE email = ?");
+        $cpass = $conn->prepare("SELECT id, password, accountType FROM accounts WHERE email = ?");
         $cpass->bind_param("s", $email);
         $cpass->execute();
         $cpass = $cpass->get_result();
         $rowCresult = $cpass->fetch_assoc();
 
+        $getId = $rowCresult["id"];
         $getPass = $rowCresult["password"];
         $getType = $rowCresult["accountType"];
 
         if (password_verify($pass, $getPass)) {
+            $_SESSION['id'] = $getId;
             $_SESSION['email'] = $email;
             $_SESSION['nickname'] = $gresult->fetch_assoc()['nickname'];
             $_SESSION['password'] = $getPass;

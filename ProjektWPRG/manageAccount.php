@@ -59,18 +59,18 @@ if (isset($_POST['password']) && isset($_POST['npassword']) && isset($_POST['cpa
         $passMsg = '<p class="text-center p-3 text-danger">Wrong password!</p>';
     }
 
-    if (isset($cpass) && $cpass instanceof mysqli_stmt) {
+    if (isset($cpass)) {
         $cpass->close();
     }
 }
 
 // Change picture
-$picSrc = $_SESSION['profile_pic'] ?? 'profilePictures/default.jpg';
+$picSrc = $_SESSION['profile_pic'] ?? 'uploads/profilePictures/default.jpg';
 $picMsg = '';
 
-if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['imageUpload'])) {
 
-    $uploadDir = 'profilePictures/';
+    $uploadDir = 'uploads/profilePictures/';
     $file = $_FILES['imageUpload'];
     $fileName = basename($file['name']);
     $fileTmp = $file['tmp_name'];
@@ -97,9 +97,9 @@ if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_
         $newFileName = uniqid('profile_', true) . '.jpg';
         $destination = $uploadDir . $newFileName;
 
-        if (imagejpeg($image_p, $destination, 100)) {
+            imagejpeg($image_p, $destination, 100);
 
-            if ($_SESSION['profPic'] != 'profilePictures/default.jpg' && file_exists($_SESSION['profPic'])) {
+            if ($_SESSION['profPic'] != 'uploads/profilePictures/default.jpg' && file_exists($_SESSION['profPic'])) {
                 unlink($_SESSION['profPic']);
             }
 
@@ -111,20 +111,12 @@ if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_
             $_SESSION['profPic'] = $destination;
 
             header("Refresh:0;");
-            exit;
-        }
-        else {
-            $picMsg = "<p class='text-danger text-center'>Upload failed while saving the file!</p>";
-        }
-        imagedestroy($image_p);
-        imagedestroy($image);
+            imagedestroy($image_p);
+            imagedestroy($image);
     }
     else {
         $picMsg = "<p class='text-danger text-center'>Only JPG and PNG formats are allowed!</p>";
     }
-}
-else if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] !== UPLOAD_ERR_NO_FILE) {
-    $picMsg = "<p class='text-danger text-center'>There was an error uploading the file!</p>";
 }
 $conn->close();
 ?>

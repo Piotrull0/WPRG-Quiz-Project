@@ -1,0 +1,24 @@
+.custom-sidebar {
+    background-color: #3d434a;
+    position: sticky;
+    top: 56px;
+    min-height: calc(100vh - 56px);
+    height: 100%;
+    overflow-y: auto;
+    width: 250px;
+}
+
+.custom-sidebar h4 {
+    color: #fff;
+}
+
+.custom-sidebar .nav-link {
+    color: #ffffff;
+    transition: background-color 0.2s ease, font-weight 0.2s ease;
+    border-radius: 5px;
+}
+
+.custom-sidebar .nav-link:hover {
+    background-color: #6c757d;
+    font-weight: bold;
+}

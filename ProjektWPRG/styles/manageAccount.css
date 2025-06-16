@@ -10,6 +10,7 @@
     transition: .5s ease;
     backface-visibility: hidden;
     border-radius: 50%;
+    border: 3px solid #6c757d;
 }
 
 #cont {

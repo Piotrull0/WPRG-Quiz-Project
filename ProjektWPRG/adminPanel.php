@@ -3,7 +3,7 @@ session_start();
 require "remember.php";
 global $conn;
 
-if (!isset($_SESSION["accountType"]) || $_SESSION["accountType"] != "admin") {
+if (!isset($_SESSION["accountType"]) || ($_SESSION["accountType"] != "admin" && $_SESSION["accountType"] != "moderator")) {
     header("Location: index.php");
     exit;
 }
@@ -20,26 +20,46 @@ if (!isset($_SESSION["accountType"]) || $_SESSION["accountType"] != "admin") {
 </head>
 <body class="d-flex flex-column min-vh-100">
 <?php include 'navbar.php' ?>
-<div class="row w-100">
-    <div class="container mt-5 col-3 border border-dark border-3 p-3">
-        <div class="row align-items-center text-center border-bottom border-3 py-3">
-            <h1 class="col-sm-3" ><i class="bi bi-person-fill-gear"></i></h1>
-            <h1 class="col-sm-6" >Manage accounts</h1>
-        </div>
-        <div class="mt-3 mb-3 text-center">
-            <a class="btn btn-primary mt-3" href="adminAccounts.php">Go to accounts</a>
-        </div>
-    </div>
-    <div class="container mt-5 col-3 border border-dark border-3 p-3">
-        <div class="row align-items-center text-center border-bottom border-3 py-3">
-            <h1 class="col-sm-3" ><i class="bi bi-gear-fill"></i></h1>
-            <h1 class="col-sm-6" >Manage quizzes</h1>
-        </div>
-        <div class="mt-3 mb-3 text-center">
-            <a class="btn btn-primary mt-3" href="">Go to quizzes</a>
-        </div>
-    </div>
-</div>
+<?php if($_SESSION["accountType"] == "admin") {
+    echo "
+<div class='row w-100' >
+    <div class='container mt-5 col-3 border border-dark border-3 p-3' >
+        <div class='row align-items-center text-center border-bottom border-3 py-3'>
+            <h1 class='col-sm-3' ><i class='bi bi-person-fill-gear' ></i ></h1 >
+            <h1 class='col-sm-6' > Manage accounts </h1 >
+        </div >
+        <div class='mt-3 mb-3 text-center' >
+            <a class='btn btn-primary mt-3' href = 'adminAccounts.php' > Go to accounts </a >
+        </div >
+    </div >
+    <div class='container mt-5 col-3 border border-dark border-3 p-3' >
+        <div class='row align-items-center text-center border-bottom border-3 py-3' >
+            <h1 class='col-sm-3' ><i class='bi bi-gear-fill' ></i ></h1 >
+            <h1 class='col-sm-6' > Manage quizes </h1 >
+        </div >
+        <div class='mt-3 mb-3 text-center' >
+            <a class='btn btn-primary mt-3' href = 'actionQuiz.php' > Go to quizzes </a >
+        </div >
+    </div >
+</div >
+";
+}
+else if($_SESSION["accountType"] == "moderator") {
+    echo "
+<div class='row w-100' >
+    <div class='container mt-5 col-3 border border-dark border-3 p-3' >
+        <div class='row align-items-center text-center border-bottom border-3 py-3' >
+            <h1 class='col-sm-3' ><i class='bi bi-gear-fill' ></i ></h1 >
+            <h1 class='col-sm-6' > Manage quizzes </h1 >
+        </div >
+        <div class='mt-3 mb-3 text-center' >
+            <a class='btn btn-primary mt-3' href = 'actionQuiz.php' > Go to quizzes </a >
+        </div >
+    </div >
+</div >
+";
+}
+?>
     <?php include 'footer.php' ?>
 </body>
 </html>
