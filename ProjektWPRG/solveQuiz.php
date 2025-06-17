@@ -18,7 +18,7 @@ $quiz->execute();
 $quizRes = $quiz->get_result()->fetch_assoc();
 
 if (!$quizRes) {
-    die("Quiz nie istnieje.");
+    die("Quiz does not exist.");
 }
 
 $qGet = $conn->prepare("SELECT * FROM questions WHERE quiz_id = ?");
@@ -103,7 +103,7 @@ if ($submitted) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title><?php echo $quizRes['title'] ?> | Quizzy</title>
